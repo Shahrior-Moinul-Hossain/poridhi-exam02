@@ -1,7 +1,12 @@
-# Create two network namespace 'red' and 'green'. Connect those using a bridge and check connectivity between those and to outside world.
+
+# Namespace Networking
 <br>
 #Author-Shahrior Moinul Hossain
 
+<br>
+
+
+# The task was to Create two network namespace 'red' and 'green'. And  to Connect those using a bridge and check connectivity between those and to outside world.
 In this writing, it is step by step described, how to create  network namespace and connect those using bridge. And how to reach outside world from those namespaces.
 
 # At starting, better to Update and Upgrade system
