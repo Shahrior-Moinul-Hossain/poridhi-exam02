@@ -73,7 +73,7 @@ In this writing, it is step by step described, how to create  network namespace 
 # Successfully Ping Green namespace (IP: 172.16.10.2) from Red namespace.
 	$ sudo ip netns exec red ping 172.16.10.2
 
-# Successfully Ping Red namespace from Green namespace.
+# Successfully Ping Red namespace (IP:172.16.10.1) from Green namespace.
 	$ sudo ip netns exec green ping 172.16.10.1
 
 # Now an iptable rule is needed to add as both namespace needs to communicate to outside. The rule will be included in NAT table (as, local IP will communicate to outside world) and in POSTROUTING chain (i.e. POSTROUTING chain is typically used for outgoing packets after routing decission has been made) and afterward, MASQUERADE is used for dynamic source NAT which allows the system to automatically modify the source IP address of the outgoing packets to match the address of the outgoing interface.
@@ -83,6 +83,6 @@ In this writing, it is step by step described, how to create  network namespace 
 # Successfully Ping to the Outside world (i.e. google DNS) from Red namespace
 	$ sudo ip netns exec red ping 8.8.8.8
 
-# Successfully Ping to the Outside world (i.e. google DNS) from Green namespace
+# Successfully Ping to the Outside world (i.e. google DNS) from Green namespace. And our Goal is finally achieved.
 	$ sudo ip netns exec Green ping 8.8.8.8
 
