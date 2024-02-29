@@ -78,7 +78,7 @@ Task: Make two network namespace using 'red' and 'green' names. Connect tem with
 # Successfully Ping Red namespace from Green namespace.
 	$ sudo ip netns exec green ping 172.16.10.1
 
-# Now an iptable rule is needed to add as system needs to communicate to outside. The rule needs to be included in NAT table (local IP will communicate to outside world) and in POSTROUTING chain (i.e. POSTROUTING chain is typically used for outgoing packets after routing has taken place.) and after MASQUERADE is added as, MASQUERADE is used for dynamic source NAT which allows the system to automatically modify the source IP address of the outgoing packets to match the address of the outgoing interface.
+# Now an iptable rule is needed to add as both namespace needs to communicate to outside. The rule will be included in NAT table (as, local IP will communicate to outside world) and in POSTROUTING chain (i.e. POSTROUTING chain is typically used for outgoing packets after routing decission has been made) and afterward, MASQUERADE is used for dynamic source NAT which allows the system to automatically modify the source IP address of the outgoing packets to match the address of the outgoing interface.
 
 	$ sudo iptables -t nat -A POSTROUTING -s 172.16.10.0/24 -j MASQUERADE
 
