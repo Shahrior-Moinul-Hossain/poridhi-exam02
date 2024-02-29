@@ -1,6 +1,6 @@
-# Make Two network namespace using 'red' and 'green' names. Connect them with a bridge and check connectivity.
+# Create two network namespace 'red' and 'green'. Connect those using a bridge and check connectivity between those and to outside world.
 <br>
-Author-Shahrior Moinul Hossain
+#Author-Shahrior Moinul Hossain
 
 In this writing, it is step by step described, how to create  network namespace and connect those using bridge. And how to reach outside world from those namespaces.
 
