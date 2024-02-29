@@ -6,23 +6,24 @@ Author-Shahrior Moinul Hossain
 
 Task: Make two network namespace using 'red' and 'green' names. Connect tem with a bridge and check connectivity.
 
-# Update and Upgrade systems
+# At first, Update and Upgrade systems
 	$ sudo apt update && apt upgrade
 
-#Install necessary Package
+# Install necessary package
 	$ sudo apt install net-tools iproute2 iputils-ping iptables -y
 
 # Add Red Namespace
 	$ sudo ip netns add red
 
-# Add green Namespace
+# Add Green Namespace
 	$ sudo ip netns add green
 
-# Add Bridge Interface br0
+# Add Bridge Interface br0, according to task requirement 
 	$sudo ip link add br0 type bridge
 
-# Add IP addredd to the newly added bridge interface
+# Assign IP address to the newly added bridge interface
 	$ sudo ip addr add 172.16.10.10/24 dev br0
+ 
 # UP the Bridge Interface
     	$ sudo ip link set br0 up
 
@@ -30,7 +31,7 @@ Task: Make two network namespace using 'red' and 'green' names. Connect tem with
     $  sudo ip link add veth-red type veth peer name veth-br0-red
 
 # Add one end of the virtual link to the Red namespace
-   $  sudo ip link set veth-red netns red
+   $ sudo ip link set veth-red netns red
 
 # Add another link of the virtual link to the Bridge Interface
    $  sudo ip link set veth-br0-red master br0
@@ -47,7 +48,7 @@ Task: Make two network namespace using 'red' and 'green' names. Connect tem with
 # Add another link of the virtual link to the Bridge Interface
    $ sudo ip link set veth-br0-green master br0
 
-# Up the bridge end of the newly created virtual cable(for Green namespace). 
+# Up the bridge end of the newly created virtual cable (for Green namespace). 
    $ sudo ip link set veth-br0-green up
 
 # Assign IP address in the Red namespace
@@ -71,7 +72,7 @@ Task: Make two network namespace using 'red' and 'green' names. Connect tem with
 
    $ sudo ip netns exec green ip route add default via 172.16.10.10
 
-# Successfully Ping Green namespace from red namespace.
+# Successfully Ping Green namespace from Red namespace.
 	$ sudo ip netns exec red ping 172.16.10.2
 
 # Successfully Ping Green namespace from red namespace.
