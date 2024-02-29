@@ -1,12 +1,10 @@
-# poridhi-exam02
-Poridhi Exam -Module 02 Docker Networking
+# Make Two network namespace using 'red' and 'green' names. Connect them with a bridge and check connectivity.
 <br>
 Author-Shahrior Moinul Hossain
 
+In this writing, it is step by step described, how to create  network namespace and connect those using bridge. And how to reach outside world from those namespaces.
 
-Task: Make two network namespace using 'red' and 'green' names. Connect tem with a bridge and check connectivity.
-
-# At first, Update and Upgrade systems
+# At starting, better to Update and Upgrade system
 	$ sudo apt update && apt upgrade
 
 # Install necessary package
