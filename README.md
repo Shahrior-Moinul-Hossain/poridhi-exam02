@@ -19,7 +19,7 @@ Task: Make two network namespace using 'red' and 'green' names. Connect tem with
 	$ sudo ip netns add green
 
 # Add Bridge Interface br0, according to task requirement 
-	$sudo ip link add br0 type bridge
+	$ sudo ip link add br0 type bridge
 
 # Assign IP address to the newly added bridge interface
 	$ sudo ip addr add 172.16.10.10/24 dev br0
@@ -51,40 +51,40 @@ Task: Make two network namespace using 'red' and 'green' names. Connect tem with
 # Up the bridge end of the newly created virtual cable (for Green namespace). 
 	   $ sudo ip link set veth-br0-green up
 
-# Assign IP address in the Red namespace
+# Assign IP address in the Red namespace. Here ip netns exec red means, the command added afterward, will be executed from inside Red namespace.
 	$ sudo ip netns exec red ip addr add 172.16.10.1/24 dev veth-red
 
-# UP the interface of Red namespace
+# UP the interface of Red namespace.
 	$ sudo ip netns exec red ip link set veth-red up
 
-# Assign IP address in the Green namespace
+# Assign IP address in the Green namespace. Here ip netns exec Green means, the command added afterward, will be executed from inside Green namespace
 	$ sudo ip netns exec green ip addr add 172.16.10.2/24 dev veth-green
 
 # UP the interface of Green namespace
 	$ sudo ip netns exec green ip link set veth-green up
 
-# Add default Route to red namespace. This means if no other routing rule is present system will use this by default. In other word, bridge interface(172.16.10.10) is declared as gateway of Red namespace.
+# Add default Route to red namespace. This means, if no other routing rule is present, system will use this route by default. In other word, the bridge interface(172.16.10.10) is declared as gateway for Red namespace.
    
 	$  sudo ip netns exec red ip route add default via 172.16.10.10
 
 
-# Add default Route to Green namespace. This means, if no other routing rule is present system will use this by default. In other word, bridge interface (172.16.10.10) is declared as gateway of Red namespace.
+# Add default Route to Green namespace. This means, if no other routing rule is present system will use this route by default. In other word, bridge interface (172.16.10.10) is declared as gateway for Green namespace.
 
 	$ sudo ip netns exec green ip route add default via 172.16.10.10
 
-# Successfully Ping Green namespace from Red namespace.
+# Successfully Ping Green namespace (IP: 172.16.10.2) from Red namespace.
 	$ sudo ip netns exec red ping 172.16.10.2
 
-# Successfully Ping Green namespace from red namespace.
+# Successfully Ping Red namespace from Green namespace.
 	$ sudo ip netns exec green ping 172.16.10.1
 
 # Now an iptable rule is needed to add as system needs to communicate to outside. The rule needs to be included in NAT table (local IP will communicate to outside world) and in POSTROUTING chain (i.e. POSTROUTING chain is typically used for outgoing packets after routing has taken place.) and after MASQUERADE is added as, MASQUERADE is used for dynamic source NAT which allows the system to automatically modify the source IP address of the outgoing packets to match the address of the outgoing interface.
 
 	$ sudo iptables -t nat -A POSTROUTING -s 172.16.10.0/24 -j MASQUERADE
 
-# Successfully Ping to the Outside world from Red namespace
+# Successfully Ping to the Outside world (i.e. google DNS) from Red namespace
 	$ sudo ip netns exec red ping 8.8.8.8
 
-# Successfully Ping to the Outside world from Green namespace
+# Successfully Ping to the Outside world (i.e. google DNS) from Green namespace
 	$ sudo ip netns exec Green ping 8.8.8.8
 
